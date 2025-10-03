@@ -1,0 +1,67 @@
+PriceAlert/
+│
+├── backend/                  # FastAPI or Express.js (API + Business logic)
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py           # Entry point for FastAPI
+│   │   ├── config.py         # Environment variables, DB config
+│   │   ├── routes/           # API routes
+│   │   │   ├── __init__.py
+│   │   │   ├── product.py    # Product endpoints
+│   │   │   ├── user.py       # User endpoints (login, register)
+│   │   │   └── alert.py      # Alerts/Notifications
+│   │   ├── services/         # Business logic
+│   │   │   ├── scraper.py    # Calls scraper module
+│   │   │   └── price_tracker.py
+│   │   ├── models/           # DB schemas (MongoDB/SQLAlchemy models)
+│   │   │   ├── product.py
+│   │   │   ├── user.py
+│   │   │   └── alert.py
+│   │   ├── database/         # DB connection logic
+│   │   │   └── connection.py
+│   │   ├── utils/            # Helper functions
+│   │   │   ├── logger.py
+│   │   │   └── validators.py
+│   │   └── tasks/            # Background tasks / cron jobs
+│   │       └── scheduler.py
+│   │
+│   ├── tests/                # Backend unit tests
+│   ├── requirements.txt      # Python dependencies
+│   └── Dockerfile
+│
+├── scraper/                  # Separate scraping module (can be microservice)
+│   ├── __init__.py
+│   ├── amazon_scraper.py
+│   ├── flipkart_scraper.py
+│   ├── utils.py
+│   └── proxies.txt           # If you use proxies
+│
+├── frontend/                 # React/Next.js app
+│   ├── public/               # Static files
+│   ├── src/
+│   │   ├── components/       # UI components (Navbar, ProductCard, etc.)
+│   │   ├── pages/            # Next.js routing (or React pages)
+│   │   │   ├── index.jsx     # Homepage
+│   │   │   ├── product.jsx   # Product detail page
+│   │   │   └── login.jsx
+│   │   ├── hooks/            # Custom React hooks (e.g., useAuth)
+│   │   ├── services/         # API calls to backend
+│   │   │   ├── api.js
+│   │   │   └── auth.js
+│   │   ├── context/          # React context (AuthProvider, ThemeProvider)
+│   │   ├── styles/           # CSS/SCSS or Tailwind config
+│   │   └── utils/            # Helper functions (formatPrice, etc.)
+│   │
+│   ├── package.json
+│   └── vite.config.js / next.config.js
+│
+├── scripts/                  # DevOps / automation scripts
+│   ├── start.sh
+│   └── deploy.sh
+│
+├── .env                      # Environment variables
+├── docker-compose.yml        # Multi-service orchestration
+├── README.md
+└── docs/                     # Documentation
+    ├── architecture.md
+    └── api_spec.md
