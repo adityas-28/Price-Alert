@@ -3,14 +3,16 @@ from datetime import datetime, timezone
 from typing import Dict, Any
 from dotenv import load_dotenv
 from pymongo import MongoClient, ReturnDocument
+from config import MONGO_URI
 
 load_dotenv()
-client = MongoClient(os.getenv("MONGODB_URI"))
+client = MongoClient(MONGO_URI)
 
 db = client["priceAlert_db"]
 products_collection = db["products"]
+users_collection = db["users"]
 
-def upsert_product(product: Dict[str, Any]) -> Dict[str, Any]:
+def upsert_product(product: Dict[str, Any]) -> Dict[str, Any] | None:
     """Update and Insert a product by ASIN and append price with timestamp.
 
     Expected product keys: asin (str), name (str), url (str), price (number)

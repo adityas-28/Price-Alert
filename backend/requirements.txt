@@ -1,0 +1,37 @@
+# Web Framework
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Database
+pymongo==4.15.1
+
+# Web Scraping
+selenium==4.35.0
+selenium-wire==5.1.0
+webdriver-manager==4.0.2
+beautifulsoup4==4.13.5
+requests==2.32.5
+
+# Data Validation
+pydantic==2.10.4
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Environment & Configuration
+python-dotenv==1.0.1
+
+# HTTP & Networking
+urllib3==2.5.0
+certifi==2025.8.3
+charset-normalizer==3.4.3
+dnspython==2.8.0
+idna==3.10
+
+# HTML Parsing
+soupsieve==2.8
+bs4==0.0.2
+
+# Type Hints
+typing_extensions==4.14.1
