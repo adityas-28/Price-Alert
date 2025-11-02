@@ -1,9 +1,12 @@
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import bcrypt
 import hashlib
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+
+security = HTTPBearer(auto_error=False)
 
 def _prepare_password(password: str) -> bytes:
     """Prepare password for bcrypt: if > 72 bytes, pre-hash with SHA256."""
@@ -59,3 +62,24 @@ def decode_access_token(token: str):
         return payload
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Extract current user's email from JWT token"""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Not authenticated",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
+    if not credentials:
+        raise credentials_exception
+    
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        return str(email)
+    except JWTError:
+        raise credentials_exception

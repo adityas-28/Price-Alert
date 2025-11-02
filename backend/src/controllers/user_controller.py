@@ -1,7 +1,7 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Response
 from src.db.connection import users_collection
-from utils.auth import hash_password, verify_password, create_access_token
-from models.user_model import UserRegister, UserLogin
+from src.utils.auth import hash_password, verify_password, create_access_token
+from src.models.user_model import UserRegister, UserLogin
 from bson import ObjectId
 
 async def register_user(user: UserRegister):
@@ -41,3 +41,16 @@ async def login_user(user: UserLogin):
 
     token = create_access_token({"sub": db_user["email"]})
     return {"access_token": token, "token_type": "bearer"}
+
+async def logout_user(response: Response, user_email: str):
+    # remove refreshToken from DB
+    users_collection.update_one(
+        {"email": user_email},
+        {"$set": {"refreshToken": None}}
+    )
+
+    # clear cookies
+    response.delete_cookie("accessToken")
+    response.delete_cookie("refreshToken")
+
+    return {"message": "User logged out successfully"}
