@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from controllers.user_controller import register_user, login_user
 from models.user_model import UserRegister, UserLogin
 
-router = APIRouter(tags=["User"])
+router = APIRouter()
 
 @router.post("/register")
 async def register(user: UserRegister):

@@ -11,6 +11,7 @@ client = MongoClient(MONGO_URI)
 db = client["priceAlert_db"]
 products_collection = db["products"]
 users_collection = db["users"]
+alert_collection = db["alerts"]
 
 def upsert_product(product: Dict[str, Any]) -> Dict[str, Any] | None:
     """Update and Insert a product by ASIN and append price with timestamp.
