@@ -46,5 +46,5 @@ ENV/
 Thumbs.db
 
 # Environment variables
-.env
-config.py
+# .env
+# config.py

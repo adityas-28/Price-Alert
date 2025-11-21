@@ -1,13 +1,30 @@
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
-from src.routes import scraper_route, user_route, alert_route, scrap_and_notify_route
+from fastapi.middleware.cors import CORSMiddleware
+from src.routes import scraper_route, user_route, alert_route, scrap_and_notify_route, product_route
 
 app = FastAPI(title="Price Tracker API")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://localhost:3000",
+    ],  # Add your frontend origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 app.include_router(scraper_route.router, prefix="/api/scraper", tags=["Scraper"])
 app.include_router(user_route.router, prefix="/api/user", tags=["User"])
 app.include_router(alert_route.router, prefix="/api/alert", tags=["Alert"])
 app.include_router(scrap_and_notify_route.router, prefix="/api/scrap-and-notify", tags=["Scraper & Notifier"])
+app.include_router(product_route.router, prefix="/api/product", tags=["product"])
 # app.include_router(graph_routes.router, prefix="/api/graph", tags=["Graphs"])
 
 @app.get("/")

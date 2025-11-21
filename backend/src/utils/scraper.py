@@ -1,8 +1,8 @@
 import httpx
+from config import API_BASE_URL
 
 async def fetch_price(asin: str) -> float:
-    url = f"http://127.0.0.1:8000/api/scraper/scrap/{asin}"
-    # Set timeout to 30 seconds (connect: 5s, read: 30s)
+    url = f"{API_BASE_URL}/api/scraper/scrap/{asin}"
     timeout = httpx.Timeout(5.0, read=30.0)
     
     try:
@@ -24,4 +24,4 @@ async def fetch_price(asin: str) -> float:
         return 0.0
     except Exception as e:
         print(f"Error fetching price for {asin}: {str(e)}")
-        return 0.0
+        return 0.0 
